@@ -23,6 +23,17 @@ public class SalaController {
         return salaRepository.findById(id)
                 .orElseThrow(() -> new AccountNotFoundException("No se encontro una cuenta con el username: " + id));
     }
+
+    @PutMapping("/salas/{id}")
+    Sala editarSala (@PathVariable String id, @RequestBody Sala salaEditar){
+        Sala salas = salaRepository.findById(id).orElseThrow(() -> new AccountNotFoundException("No se encontro la sala: " + id));
+        
+        salas.setMarcador1(salaEditar.getMarcador1());
+        salas.setMarcador2(salaEditar.getMarcador2());
+        Sala editarSala = salaRepository.save(salas);
+        return salaRepository.save(editarSala);
+    }
+    
     @DeleteMapping ("/salas/{id}")
     void borrarSala (@PathVariable String id) {
             Sala salita = salaRepository.findById(id).orElse(null);
